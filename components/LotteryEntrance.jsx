@@ -2,10 +2,13 @@ import { useMoralis, useWeb3Contract } from "react-moralis";
 import { abi, contractAddresses } from "@/constants";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import { useNotification } from "web3uikit";
 
 export default function LotteryEntrace() {
     const { chainId: chainIdHex, isWeb3Enabled } = useMoralis();
     const [entranceFee, setEntraceFee] = useState("0");
+
+    const dispatch = useNotification();
 
     //* get raffle address
     const chainId = parseInt(chainIdHex);
@@ -37,6 +40,21 @@ export default function LotteryEntrace() {
         }
     }, [isWeb3Enabled]);
 
+    // handleSuccess receive the transaction response as parameter
+    const handleSuccess = async function (tx) {
+        await tx.wait(1);
+        handleNewNotification();
+    };
+
+    const handleNewNotification = function () {
+        dispatch({
+            type: "success",
+            title: "Tx Notification",
+            message: "Trasaction completed!",
+            position: "topR",
+        });
+    };
+
     return (
         <div>
             Hi from lottery entrace
@@ -44,7 +62,12 @@ export default function LotteryEntrace() {
                 <div>
                     <button
                         onClick={async () => {
-                            await enterRaffe();
+                            await enterRaffe({
+                                onSuccess: handleSuccess,
+                                onError: (error) => {
+                                    console.log(error);
+                                },
+                            });
                         }}
                     >
                         Enter raffle
