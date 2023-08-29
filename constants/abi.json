@@ -114,6 +114,16 @@
     },
     {
         "type": "function",
+        "name": "getNumberOfPlayers",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "gas": 29000000,
+        "inputs": [],
+        "outputs": [{ "type": "uint256" }]
+    },
+    {
+        "type": "function",
         "name": "getPlayerWithIndex",
         "constant": true,
         "stateMutability": "view",

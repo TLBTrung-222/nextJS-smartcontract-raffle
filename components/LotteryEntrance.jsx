@@ -7,6 +7,8 @@ import { useNotification } from "web3uikit";
 export default function LotteryEntrace() {
     const { chainId: chainIdHex, isWeb3Enabled } = useMoralis();
     const [entranceFee, setEntraceFee] = useState("0");
+    const [numberOfPlayers, setNumberOfPlayers] = useState("0");
+    const [recentWinner, setRecentWinner] = useState("");
 
     const dispatch = useNotification();
 
@@ -30,20 +32,40 @@ export default function LotteryEntrace() {
         msgValue: entranceFee,
     });
 
+    const { runContractFunction: getNumberOfPlayers } = useWeb3Contract({
+        abi: abi,
+        contractAddress: raffleAddress,
+        functionName: "getNumberOfPlayers",
+        params: {},
+    });
+
+    const { runContractFunction: getRecentWinner } = useWeb3Contract({
+        abi: abi,
+        contractAddress: raffleAddress,
+        functionName: "getRecentWinner",
+        params: {},
+    });
+
     useEffect(() => {
         if (isWeb3Enabled) {
-            async function updateUI() {
-                const entranceFeeFromCall = await getEntranceFee(); // return a big number
-                setEntraceFee(entranceFeeFromCall);
-            }
             updateUI();
         }
     }, [isWeb3Enabled]);
+
+    async function updateUI() {
+        const entranceFeeFromCall = await getEntranceFee(); // return a big number
+        const numberOfPlayersFromCall = await getNumberOfPlayers();
+        const recentWinnerFromCall = await getRecentWinner();
+        setEntraceFee(entranceFeeFromCall);
+        setNumberOfPlayers(numberOfPlayersFromCall);
+        setRecentWinner(recentWinnerFromCall);
+    }
 
     // handleSuccess receive the transaction response as parameter
     const handleSuccess = async function (tx) {
         await tx.wait(1);
         handleNewNotification();
+        updateUI();
     };
 
     const handleNewNotification = function () {
@@ -63,7 +85,7 @@ export default function LotteryEntrace() {
                     <button
                         onClick={async () => {
                             await enterRaffe({
-                                onSuccess: handleSuccess,
+                                onSuccess: handleSuccess, // this indicate the transaction has sent to Metamask
                                 onError: (error) => {
                                     console.log(error);
                                 },
@@ -73,6 +95,8 @@ export default function LotteryEntrace() {
                         Enter raffle
                     </button>
                     Entrance fee: {ethers.utils.formatEther(entranceFee)} ETH
+                    Number of players: {numberOfPlayers.toString()}
+                    Recent winner: {recentWinner.toString()}
                 </div>
             ) : (
                 <div>No raffle address detected</div>
