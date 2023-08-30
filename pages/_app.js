@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "../styles/globals.css";
 import { MoralisProvider } from "react-moralis";
 import { NotificationProvider } from "web3uikit";
 
