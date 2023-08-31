@@ -4,7 +4,6 @@
 -   [Getting Started](#getting-started)
     -   [Requirements](#requirements)
     -   [Quickstart](#quickstart)
-    -   [Formatting in VSCode](#formatting-in-vscode)
 -   [Usage](#usage)
 -   [Deploying to IPFS](#deploying-to-ipfs)
 -   [Deploy to IPFS using Fleek](#deploy-to-ipfs-using-fleek)
@@ -16,17 +15,26 @@ This is a section of the Javascript Blockchain/Smart Contract FreeCodeCamp Cours
 ![App](img/readme-app.png)
 
 [Example App on Fleek here!](https://black-waterfall-4509.on.fleek.co/)  
-[Example App on IPFS here!](ipfs://QmPfed5L3M44EWrvs2sKnovvmKgHkPqMTH8rDp4tAdxo4n)
+Example App on IPFS: ipfs://QmPfed5L3M44EWrvs2sKnovvmKgHkPqMTH8rDp4tAdxo4n
 
 ### Built with:
 
+#### UI
+
 `NextJS`: React framework to build UI  
-`Solidity`: smartcontract development language  
-`Chainlink`: for randomness and automation  
-`Moralis`: get `chainId` and `isWeb3Enabled` properties  
+`Tailwind`: CSS framework for styling UI  
 `web3uikit`: get built-in components (connect button + notification trigger)  
+`Moralis`: get `chainId` and `isWeb3Enabled` properties
+
+#### Smartcontract
+
+`Solidity`: main smartcontract development language in Ethereum  
+`Chainlink`: for randomness and automation services  
 `Ethers`: library to interact with smartcontract using JS  
-`Hardhat`: development environment for Ethereum software  
+`Hardhat`: development environment for Ethereum software
+
+#### Storage
+
 `IPFS`: protocol to store data (frontend code)
 
 # Getting Started
@@ -42,6 +50,8 @@ This is a section of the Javascript Blockchain/Smart Contract FreeCodeCamp Cours
     -   You'll know you've installed yarn right if you can run:
         -   `yarn --version` and get an output like: `x.x.x`
         -   You might need to [install it with `npm`](https://classic.yarnpkg.com/lang/en/docs/install/) or `corepack`
+-   [Metamask](https://metamask.io/)
+    -   Dowload this crypto wallet extension to interact with blockchains
 
 ## Quickstart
 
@@ -50,19 +60,6 @@ git clone https://github.com/TLBTrung-222/nextJS-smartcontract-raffle.git
 cd nextjs-smartcontract-raffle
 yarn
 yarn dev
-```
-
-## Formatting in VSCode
-
-To have VSCode extension prettier auto-format `.jsx` and `.tsx`, add the following to your settings.json file:
-
-```
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
 ```
 
 # Usage
